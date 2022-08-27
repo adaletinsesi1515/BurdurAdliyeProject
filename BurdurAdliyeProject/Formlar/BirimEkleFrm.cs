@@ -48,5 +48,37 @@ namespace BurdurAdliyeProject.Formlar
             Listele();
             txtBirimAdi.Text = "";
         }
+
+        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            txtID.Text = gridView1.GetFocusedRowCellValue("Id").ToString();
+            txtBirimAdi.Text = gridView1.GetFocusedRowCellValue("BirimAd").ToString();
+        }
+
+        private void btn_Sil_Click(object sender, EventArgs e)
+        {
+            int x = int.Parse(txtID.Text);
+            var deger = db.Birimler.Find(x);
+            db.Birimler.Remove(deger);
+            db.SaveChanges();
+            XtraMessageBox.Show("Kayıt Silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Listele();
+        }
+
+        private void btn_temizle_Click(object sender, EventArgs e)
+        {
+            txtID.Text = "";
+            txtBirimAdi.Text = "";
+        }
+
+        private void btn_guncelle_Click(object sender, EventArgs e)
+        {
+            int x = int.Parse(txtID.Text);
+            var deger = db.Birimler.Find(x);
+            deger.BirimAd = txtBirimAdi.Text;            
+            db.SaveChanges();
+            XtraMessageBox.Show("Kayıt Güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Listele();
+        }
     }
 }
